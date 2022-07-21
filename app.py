@@ -43,11 +43,13 @@ def fetch(phone, password, step):
     try:
         res = request.urlopen(req, timeout=10.0).read()
     except:
+        print(f"请求超时 {phone}")
         return False
     else:
         if json.loads(res.decode("utf-8")).get("code") == 200:
             return True
         else:
+            print(json.loads(res.decode("utf-8")))
             return False
 
 
