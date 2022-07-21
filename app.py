@@ -1,8 +1,7 @@
 from hashlib import md5
 from datetime import datetime as dt
-from urllib import parse
+from urllib import parse, request
 import os, base64, random, json, random
-import requests
 
 # key = md5(encode(`${params.phone}1${params.password}2${params.step}xjdsb${params.time}`))
 
@@ -23,9 +22,9 @@ class Params:
 def fetch(phone, password, step):
     params = Params(phone=phone, password=password, step=step)
     ip = f"119.120.{random.randint(1,255)}.{random.randint(1,255)}"
-    res = requests.post(
+    req = request.Request(
         "https://api.shuabu.net/apix/xm.php",
-        data=parse.urlencode(params.__dict__),
+        data=parse.urlencode(params.__dict__).encode("utf-8"),
         headers={
             "authority": "api.shuabu.net",
             "accept": "application/json, text/javascript, */*; q=0.01",
@@ -39,8 +38,10 @@ def fetch(phone, password, step):
             "X-Real-IP": ip,
             "X-Originating-IP": ip,
         },
+        method="POST",
     )
-    if res.json().get("code") == 200:
+    res = request.urlopen(req).read()
+    if json.loads(res.decode()).get("code") == 200:
         return True
     else:
         return False
