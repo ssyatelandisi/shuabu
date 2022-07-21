@@ -40,11 +40,15 @@ def fetch(phone, password, step):
         },
         method="POST",
     )
-    res = request.urlopen(req).read()
-    if json.loads(res.decode()).get("code") == 200:
-        return True
-    else:
+    try:
+        res = request.urlopen(req, timeout=10.0).read()
+    except:
         return False
+    else:
+        if json.loads(res.decode("utf-8")).get("code") == 200:
+            return True
+        else:
+            return False
 
 
 def shuabu():
