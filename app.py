@@ -23,7 +23,7 @@ def fetch(phone, password, step):
     params = Params(phone=phone, password=password, step=step)
     ip = f"119.120.{random.randint(1,255)}.{random.randint(1,255)}"
     req = request.Request(
-        "https://api.shuabu.net/apix/xm.php",
+        "https://admin.shuabu.net/xmphp",
         data=parse.urlencode(params.__dict__).encode("utf-8"),
         headers={
             "authority": "api.shuabu.net",
@@ -80,4 +80,3 @@ if __name__ == "__main__":
     shuabu()
     finish = dt.now()
     print(f"耗时 {finish - start}\n")
-    # print("")
