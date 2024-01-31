@@ -76,7 +76,8 @@ def shuabu():
         return None
     step = str(random.randint(18000, 22000))
     for item in data:
-        while (times := 0) <= 5 and not item.get("result", False):  # times失败次数
+        times = 0
+        while times <= 5 and not item.get("result", False):  # times失败次数
             result = fetch(item["phone"], item["password"], step)
             if result:
                 item["result"] = True
