@@ -6,7 +6,7 @@ import os, base64, random, json
 
 # key = md5(encode(`${params.phone}1${params.password}2${params.step}xjdsb${params.time}`))
 
-GETURL = "https://apis.jxcxin.cn/api/mi?user={}&password={}&step={}"
+GETURL = "http://api.muvip.cn/api/xiaomi/api.php?account={}&password={}&steps={}"
 
 
 class Params:
@@ -31,7 +31,7 @@ def fetch(user: str, password: str, step: str):
             "accept": "application/json, text/javascript, */*; q=0.01",
             "accept-language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,ja;q=0.6,ko;q=0.5,zh-TW;q=0.4,und;q=0.3,ru;q=0.2",
             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "referer": "https://step.datu520.cn/",
+            "referer": "http://api.muvip.cn/",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
             "x-forwarded-for": ip,
             "X-Remote-IP": ip,
@@ -46,7 +46,7 @@ def fetch(user: str, password: str, step: str):
         print(f"请求超时 {user}")
         return False
     else:
-        if str(json.loads(res.decode("utf-8")).get("code")) == "200":
+        if str(json.loads(res.decode("utf-8")).get("code")) == "1":
             return True
         else:
             print(json.loads(res.decode("utf-8")))
